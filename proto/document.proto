@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package document;
+
+option go_package = "investment-document-analyzer/proto";
+
+service DocumentAnalysisService {
+  // Upload and analyze a document
+  rpc AnalyzeDocument(AnalyzeDocumentRequest) returns (AnalyzeDocumentResponse) {}
+  
+  // List all analyzed documents
+  rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse) {}
+}
+
+message AnalyzeDocumentRequest {
+  string filename = 1;
+  bytes content = 2;
+}
+
+message AnalyzeDocumentResponse {
+  string document_id = 1;
+  string filename = 2;
+  AnalysisResult analysis = 3;
+}
+
+message ListDocumentsRequest {
+  // Optional parameters could be added here (pagination, filters, etc.)
+}
+
+message ListDocumentsResponse {
+  repeated DocumentSummary documents = 1;
+}
+
+message DocumentSummary {
+  string document_id = 1;
+  string filename = 2;
+  AnalysisResult analysis = 3;
+  string uploaded_at = 4; // ISO 8601 format
+}
+
+message AnalysisResult {
+  repeated string key_topics = 1;
+  string sentiment = 2;
+  repeated string mentioned_companies = 3;
+  string analyzed_at = 4; // ISO 8601 format
+}

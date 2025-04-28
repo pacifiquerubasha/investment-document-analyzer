@@ -1,94 +1,113 @@
+# Testing Guide for Investment Document Analyzer
 
-# 📄 Investment Document Analyzer (Vue.js + Go + gRPC)
+This guide provides step-by-step instructions for testing the Investment Document Analyzer application.
 
-A simple research tool that allows users to upload PDF documents and receive AI-simulated analysis results. This project tests:
+## Prerequisites
 
-- gRPC + Go backend development
-- Protobuf definition and code generation
-- Vue.js frontend with gRPC-Web integration
-- gRPC-Web proxy setup and communication flow
+Before you begin, ensure you have installed:
 
----
-
-## 🎯 Objective
-
-To simulate document analysis in a mock investment research tool using:
-- **Golang with gRPC** for the backend
-- **Protobufs** for API contracts
-- **Vue.js** for the web frontend
-- **Envoy or grpcwebproxy** for gRPC-Web communication
-
----
-
-## 🛠 Tech Stack
-
-- **Backend:** Golang with gRPC
-- **Frontend:** Vue.js with gRPC-Web
-- **Protobufs:** For request/response schemas
-- **Proxy Layer:** Envoy or grpcwebproxy
-
----
-
-## ✨ Functionality
-
-### 1. 📤 Upload Investment Document
-- Upload a PDF file via frontend
-- Send the file over gRPC to the Go backend
-
-### 2. 🧠 Simulate AI Document Analysis
-Backend simulates analysis by returning:
-- Key topics (e.g., “Tech Trends”)
-- Sentiment (e.g., “Neutral”)
-- Mentioned companies (e.g., “AAPL”, “TSLA”)
-
-### 3. 📄 View Analysis Results
-- Show insights on screen (topics, sentiment, companies)
-- Maintain history of uploaded documents + results
-
----
-
-## 📦 Protobuf API Definition (document.proto)
-
-feel free to do your own proto definations here
-
-## 🔧 Backend (Go)
-
-- Implements `DocumentAnalysisService`
-- Stores documents + analysis results in memory
-- Randomly generates mock insights from predefined values
-- Runs on `localhost:50051` for gRPC communication
-
----
-
-## 🖥 Frontend (Vue.js)
-
-- Upload PDF via a form
-- Submit button to upload + analyze
-- Display table of all uploaded docs + analysis results
-- Integrates with backend via gRPC-Web
+- Go 1.24+
+- Node.js and npm
+- Protocol Buffers compiler (protoc)
+- Docker (for Envoy proxy)
+- [Protocol Buffer plugins](#installing-protocol-buffer-plugins)
 
 
-## ✅ Deliverables
+## Step-by-Step Testing Process
 
-- `proto/document.proto`
-- Go-based `server/` with gRPC logic
-- Vue.js `client/` with form + analysis viewer
-- Envoy config for proxying gRPC-Web
-- README with setup and usage docs
+### 1. Setup the Project
 
----
+```bash
+# Setup the project (generates proto files and installs dependencies)
+make setup
+```
 
-## 📋 Evaluation Criteria
+### 2. Build the Backend
 
-- ✅ Protobuf definitions are correct and functional
-- ✅ Backend is fully working with in-memory logic
-- ✅ gRPC-Web correctly bridges Vue and Go
-- ✅ Clean code with organized project structure
-- ✅ Basic but intuitive UI
+```bash
+make build-server
+```
 
----
+### 3. Test Components Individually
+#### 3.1 Test the Backend
 
-## 🙌 Notes
+```bash
+make run-server
+```
 
-No real AI/ML models are required — just fake/mock data is fine for simulation.
+You should see output like:
+```
+Starting Go server on port 50051...
+Server listening at [::]:50051
+```
 
+Keep this terminal open and open a new terminal for the next step.
+
+#### 3.2 Test the Envoy Proxy
+
+```bash
+make run-proxy
+```
+
+You should see Docker starting the Envoy container:
+```
+Starting Envoy proxy...
+```
+
+Check if the container is running:
+```bash
+docker ps | grep envoy
+```
+
+#### 3.3 Test the Frontend
+
+```bash
+make run-frontend
+```
+
+You should see output indicating that the Vue.js development server is running, usually on port 3000.
+
+### 4. Test All Components Together
+
+If all individual components work, you can run them all together:
+
+```bash
+# Stop any running services first
+make stop
+
+# Run all services
+make run-all
+```
+
+### 5. Use the Application
+
+1. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
+2. You should see the Investment Document Analyzer interface
+3. Use the file upload to select a PDF document
+4. Click "Upload & Analyze" to process the document
+5. The analysis results should appear in the table below
+
+## Expected Results
+
+After uploading a document, you should see:
+
+- The document name in the results table
+- Randomly generated key topics
+- A sentiment value (Positive, Neutral, Negative, or Mixed)
+- Randomly selected company ticker symbols
+- Timestamp of when the analysis was performed
+
+
+### 6. Cleaning Up
+
+When you're done testing, stop all services:
+
+```bash
+make stop
+```
+
+If you want to remove build artifacts:
+
+```bash
+make clean
+```
