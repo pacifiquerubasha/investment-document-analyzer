@@ -1,0 +1,178 @@
+.results-container {
+  background: var(--card-background);
+  padding: 30px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+.results-container:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.results-container h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: -0.3px;
+}
+
+.results-counter {
+  background-color: rgba(10, 132, 255, 0.1);
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.empty-state-icon {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.no-results p {
+  margin: 5px 0;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.empty-state-helper {
+  color: var(--text-secondary) !important;
+  font-size: 0.95rem !important;
+  margin-top: 5px;
+}
+
+.results-wrapper {
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.results-table {
+  overflow-x: auto;
+}
+
+.results-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+  padding: 16px;
+  text-align: left;
+}
+
+.results-table th {
+  background-color: rgba(10, 132, 255, 0.03);
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.results-table td {
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+.results-table tr:last-child td {
+  border-bottom: none;
+}
+
+.results-table tr:hover {
+  background-color: rgba(10, 132, 255, 0.03);
+}
+
+.file-icon {
+  margin-right: 8px;
+  color: var(--text-secondary);
+}
+
+.date-cell {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 2px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.topic-tags,
+.company-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.topic-tag {
+  background-color: rgba(10, 132, 255, 0.1);
+  color: var(--primary-color);
+}
+
+.company-tag {
+  background-color: rgba(94, 92, 230, 0.1);
+  color: var(--secondary-color);
+}
+
+.no-data {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.sentiment-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.sentiment-badge.positive {
+  background-color: rgba(48, 209, 88, 0.15);
+  color: var(--success-color);
+}
+
+.sentiment-badge.neutral {
+  background-color: rgba(255, 159, 10, 0.15);
+  color: var(--neutral-color);
+}
+
+.sentiment-badge.negative {
+  background-color: rgba(255, 69, 58, 0.15);
+  color: var(--error-color);
+}
+
+.sentiment-badge.mixed {
+  background-color: rgba(191, 90, 242, 0.15);
+  color: var(--mixed-color);
+}

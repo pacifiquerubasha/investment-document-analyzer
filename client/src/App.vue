@@ -67,56 +67,6 @@ export default {
 </script>
 
 <style>
-:root {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
-  --background-color: #f5f7fa;
-  --text-color: #333;
-  --border-color: #ddd;
-  --success-color: #27ae60;
-  --error-color: #e74c3c;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-h1 {
-  color: var(--primary-color);
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: #666;
-  font-size: 1.1em;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-footer {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  color: #666;
-  border-top: 1px solid var(--border-color);
-}
+@import './assets/styles/variables.css';
+@import './assets/styles/app.css';
 </style>

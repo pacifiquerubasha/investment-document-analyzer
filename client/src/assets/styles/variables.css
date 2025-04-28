@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap');
+
+:root {
+  --primary-color: #0a84ff;
+  --primary-dark: #0066cc;
+  --secondary-color: #5e5ce6;
+  --background-color: #f5f7fa;
+  --card-background: #ffffff;
+  --text-color: #1d1d1f;
+  --text-secondary: #86868b;
+  --border-color: #e6e6e6;
+  --success-color: #30d158;
+  --error-color: #ff453a;
+  --neutral-color: #ff9f0a;
+  --mixed-color: #bf5af2;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+body {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

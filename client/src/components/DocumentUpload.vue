@@ -12,8 +12,18 @@
           id="fileInput"
         />
         <label for="fileInput" class="file-label">
-          <span v-if="!selectedFile">Choose PDF file</span>
-          <span v-else>{{ selectedFile.name }}</span>
+          <div class="file-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="12" x2="12" y2="18"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <div class="file-label-text">
+            <span v-if="!selectedFile">Choose PDF file</span>
+            <span v-else class="selected-filename">{{ selectedFile.name }}</span>
+          </div>
         </label>
       </div>
 
@@ -22,11 +32,17 @@
         :disabled="!selectedFile || isUploading"
         class="submit-button"
       >
-        {{ isUploading ? "Analyzing..." : "Upload & Analyze" }}
+        <span v-if="isUploading" class="loading-spinner"></span>
+        <span>{{ isUploading ? "Analyzing..." : "Upload & Analyze" }}</span>
       </button>
     </form>
 
     <div v-if="error" class="error-message">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
       {{ error }}
     </div>
   </div>
@@ -35,6 +51,7 @@
 <script>
 import { DocumentAnalysisServiceClient } from "../proto/document_grpc_web_pb.js";
 import { AnalyzeDocumentRequest } from "../proto/document_pb.js";
+import { readFileAsArrayBuffer } from "../utils/fileUtils.js";
 
 export default {
   name: "DocumentUpload",
@@ -69,7 +86,7 @@ export default {
       this.error = null;
 
       try {
-        const arrayBuffer = await this.readFileAsArrayBuffer(this.selectedFile);
+        const arrayBuffer = await readFileAsArrayBuffer(this.selectedFile);
         const uint8Array = new Uint8Array(arrayBuffer);
 
         const request = new AnalyzeDocumentRequest();
@@ -99,88 +116,10 @@ export default {
         this.isUploading = false;
       }
     },
-
-    readFileAsArrayBuffer(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(e);
-        reader.readAsArrayBuffer(file);
-      });
-    },
   },
 };
 </script>
 
-<style scoped>
-.upload-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin-top: 0;
-  color: var(--primary-color);
-}
-
-.upload-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.file-input-wrapper {
-  position: relative;
-}
-
-.file-input {
-  display: none;
-}
-
-.file-label {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: var(--background-color);
-  border: 2px dashed var(--border-color);
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-.file-label:hover {
-  border-color: var(--secondary-color);
-  background-color: white;
-}
-
-.submit-button {
-  padding: 12px 24px;
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover:not(:disabled) {
-  background-color: #2980b9;
-}
-
-.submit-button:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-}
-
-.error-message {
-  color: var(--error-color);
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #ffeaea;
-  border-radius: 4px;
-}
+<style>
+@import '../assets/styles/documentUpload.css';
 </style>
